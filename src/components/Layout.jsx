@@ -2,8 +2,7 @@ import { Row as OriginalRow, Col } from 'antd';
 import styled from 'styled-components';
 
 const Row = styled(OriginalRow)`
-  height: 100vh;
-  width: 100vw;
+  margin: 50px 0px;
 `;
 
 const Layout = ({ children }) => {

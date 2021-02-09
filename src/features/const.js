@@ -15,3 +15,23 @@ export const ARRAY_OF_URLS = (param) => [
   SPECIES_URL(param),
   VEHICLES_URL(param),
 ];
+
+export const getResultsObj = async (param) => {
+  const starships = await fetch(STARSHIPS_URL(param)).then((resp) =>
+    resp.json()
+  );
+  const people = await fetch(PEOPLE_URL(param)).then((resp) => resp.json());
+  const planets = await fetch(PLANETS_URL(param)).then((resp) => resp.json());
+  const films = await fetch(FILMS_URL(param)).then((resp) => resp.json());
+  const species = await fetch(SPECIES_URL(param)).then((resp) => resp.json());
+  const vehicles = await fetch(VEHICLES_URL(param)).then((resp) => resp.json());
+
+  return {
+    starships: starships.results,
+    people: people.results,
+    planets: planets.results,
+    films: films.results,
+    species: species.results,
+    vehicles: vehicles.results,
+  };
+};

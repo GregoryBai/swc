@@ -10,3 +10,5 @@ export const COLORS = {
 };
 
 export const HIGHLIGHT_COLOR = 'black';
+
+export const STRICT_FILTER = true;

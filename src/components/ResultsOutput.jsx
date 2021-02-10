@@ -1,16 +1,14 @@
-import React, { useRef, useState, Fragment } from 'react';
-import { COLORS, HIGHLIGHT_COLOR } from '../features/GLOBAL_SETTINGS';
+import React, { useState, Fragment } from 'react';
+import {
+  COLORS,
+  HIGHLIGHT_COLOR,
+  STRICT_FILTER,
+} from '../features/GLOBAL_SETTINGS';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import { Descriptions as OriginalDescriptions } from 'antd';
 import { CloseCircleTwoTone as OriginalCloseCircleTwoTone } from '@ant-design/icons';
 
-const Center = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const Descriptions = styled(OriginalDescriptions)`
   margin: 10px;
   padding: 10px;
@@ -110,6 +108,12 @@ const getColor = (type) => COLORS[type];
 const ResultsOutput = ({ data, query }) => {
   const [descData, setDescData] = useState(null);
 
+  const checkTitleForQuery = (obj, query) => {
+    if (!STRICT_FILTER) return true;
+    const title = obj.title || obj.name;
+    return title.toLowerCase().includes(query.toLowerCase());
+  };
+
   const renderData =
     data && Object.entries(data).filter((entry) => entry[1] !== null);
 
@@ -125,17 +129,19 @@ const ResultsOutput = ({ data, query }) => {
   const renderFunc = ([type, data]) => {
     return (
       <Fragment key={uuid()}>
-        {data.map((obj) => (
-          <Card
-            data={obj}
-            onClick={handleCardClick}
-            color={getColor(type)}
-            type={type}
-            name={obj.name || obj.title}
-            query={query}
-            key={uuid()}
-          />
-        ))}
+        {data
+          .filter((obj) => checkTitleForQuery(obj, query))
+          .map((obj) => (
+            <Card
+              data={obj}
+              onClick={handleCardClick}
+              color={getColor(type)}
+              type={type}
+              name={obj.name || obj.title}
+              query={query}
+              key={uuid()}
+            />
+          ))}
       </Fragment>
     );
   };

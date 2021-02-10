@@ -1,62 +1,84 @@
-import React, { useMemo, useCallback, useState, Fragment } from 'react';
-import { COLORS } from '../features/GLOBAL_SETTINGS';
+import React, { useState, Fragment } from 'react';
+import { COLORS, HIGHLIGHT_COLOR } from '../features/GLOBAL_SETTINGS';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
-import { Descriptions, Card } from '.';
+
+const CardBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 1px;
+  padding: 15px;
+  min-height: 60px;
+  max-height: 160px;
+  flex: 200px 1 1;
+  background: aliceblue;
+`;
+
+const ItemName = styled.p`
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+const ItemType = styled.p`
+  color: ${(props) => props.color || 'grey'};
+`;
+
+// const List = styled(OriginalList)`
+//   padding: 50px;
+//   overflow: hidden;
+// `;
 
 const Container = styled.div`
-  padding: 20px;
-
-  display: grid;
+  padding: 50px;
   gap: 15px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-  grid-template-rows: repeat(auto-fit, minmax(50px, 80px));
+  display: flex;
+  flex-wrap: wrap;
 `;
+
+const Card = ({ name = 'ABABA', type = 'BuahBua', color, query }) => {
+  return (
+    <CardBody>
+      <ItemName>{name}</ItemName>
+      <ItemType color={color}>{type}</ItemType>
+    </CardBody>
+  );
+};
 
 const getColor = (type) => COLORS[type];
 
 const ResultsOutput = ({ data, query }) => {
-  const [descData, setDescData] = useState(null);
+  const renderData =
+    data && Object.entries(data).filter((entry) => entry[1] !== null);
 
-  const handleCardClick = (info) => {
-    console.log('CLICK');
-    setDescData(info);
+  const renderFunc = ([type, data]) => {
+    console.log(type, data);
+
+    return (
+      <Fragment key={uuid()}>
+        {data.map((obj) => (
+          <Card
+            color={getColor(type)}
+            type={type}
+            name={obj.name || obj.title}
+            query={query}
+            key={uuid()}
+          />
+        ))}
+      </Fragment>
+    );
   };
-
-  const closeDesc = () => {
-    setDescData(null);
-  };
-
-  const renderData = useMemo(
-    () => data && Object.entries(data).filter((entry) => entry[1] !== null),
-    [data]
-  );
-
-  const renderFunc = useCallback(
-    ([type, data]) => {
-      return (
-        <Fragment key={uuid()}>
-          {data.map((obj) => (
-            <Card
-              onClick={() => handleCardClick(obj)}
-              color={getColor(type)}
-              type={type}
-              name={obj.title || obj.name}
-              query={query}
-              key={uuid()}
-            />
-          ))}
-        </Fragment>
-      );
-    },
-    [query]
-  );
-
   return (
-    <main>
-      {descData && <Descriptions descData={descData} onClose={closeDesc} />}
-      <Container>{query && !descData && renderData.map(renderFunc)}</Container>
-    </main>
+    // <List
+    //   itemLayout="vertical"
+    //   dataSource={renderData}
+    //   renderItem={renderFunc}
+    // />
+
+    <Container>{renderData.map(renderFunc)}</Container>
   );
 };
 

@@ -1,4 +1,4 @@
-export const MIN_CHARS = 0;
+export const MIN_CHARS = 2;
 
 export const COLORS = {
   starships: 'orange',

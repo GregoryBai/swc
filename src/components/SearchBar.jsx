@@ -9,10 +9,6 @@ const Search = styled(Input.Search)`
 `;
 
 const SearchBar = ({ query, setQuery, loading }) => {
-  const handleInput = (e) => {
-    setQuery(e.target.value);
-  };
-
   return (
     <>
       <Search
@@ -20,7 +16,9 @@ const SearchBar = ({ query, setQuery, loading }) => {
         placeholder="input search loading with enterButton"
         loading={loading}
         enterButton
-        onChange={handleInput}
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
       />
       <br />
     </>

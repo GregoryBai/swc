@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import { Input, List, Card } from 'antd';
-import { apiStore } from '../features/store';
-import compositionStore from '../features/CompositionStore';
-import { observer } from 'mobx-react-lite';
-import { autorun, reaction, toJS } from 'mobx';
+import React from 'react';
+import { Input } from 'antd';
+import styled from 'styled-components';
 
-import { ARRAY_OF_URLS } from '../features/const';
-
-const { Search } = Input;
-
-/* reaction(
-  () => apiStore.data,
-  (data) => console.log(toJS(data))
-); */
+const Search = styled(Input.Search)`
+  & .ant-input {
+    border-radius: 5px;
+  }
+`;
 
 const SearchBar = ({ query, setQuery, loading }) => {
   const handleInput = (e) => {

@@ -9,4 +9,4 @@ export const COLORS = {
   species: 'green',
 };
 
-export const HIGHLIGHT_COLOR = 'yellow';
+export const HIGHLIGHT_COLOR = 'black';

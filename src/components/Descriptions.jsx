@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 
-const AntDescriptions = styled(OriginalDescriptions)`
+const Descriptions = styled(OriginalDescriptions)`
   margin: 10px;
   padding: 10px;
   border: 3px solid yellow;
@@ -33,17 +33,18 @@ const CloseCircleTwoTone = styled(OriginalCloseCircleTwoTone)`
   }
 `;
 
-const Descriptions = ({ onClose, descData }) => {
+const DescriptionsComponent = ({ onClose, descData }) => {
   const renderItems = useCallback(() => {
+    console.log(descData);
     return Object.entries(descData).map(([key, value]) => (
-      <AntDescriptions.Item key={uuid()} label={<b>{key}</b>}>
+      <Descriptions.Item key={uuid()} label={<b>{key}</b>}>
         {value}
-      </AntDescriptions.Item>
+      </Descriptions.Item>
     ));
   }, [descData]);
 
   return (
-    <AntDescriptions
+    <Descriptions
       title={
         <DescriptionsTitle>
           <span>Card Info:</span>
@@ -53,8 +54,8 @@ const Descriptions = ({ onClose, descData }) => {
       layout="horizontal"
     >
       {renderItems()}
-    </AntDescriptions>
+    </Descriptions>
   );
 };
 
-export default Descriptions;
+export default DescriptionsComponent;

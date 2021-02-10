@@ -19,7 +19,7 @@ const ResultsOutput = ({ data, query }) => {
   const [descData, setDescData] = useState(null);
 
   const handleCardClick = (info) => {
-    console.log('CLICK');
+    console.log('CLICK', info);
     setDescData(info);
   };
 

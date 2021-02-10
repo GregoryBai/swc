@@ -43,7 +43,6 @@ const Card = ({ name = '', type, color, query = '', onClick }) => {
   const len = query.length;
   const stIndex = name.toLowerCase().search(query.toLowerCase());
   const endIndex = stIndex + len;
-  console.log(name, letters);
 
   return (
     <CardBody onClick={onClick}>
